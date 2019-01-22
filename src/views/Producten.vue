@@ -10,11 +10,12 @@
                     {{product.naam}}
                 </header>
                 <figure class="img-container">
-                    <img :src="maakAfbeeldingUrl(product)" :alt="`Afbeelding van ${product.naam}`">
+                    <img :src="maakAfbeeldingUrl(product)"
+                         :alt="`Afbeelding van ${product.naam}`">
+                    <figcaption class="product-prijs">
+                        &euro;{{product.prijs}}
+                    </figcaption>
                 </figure>
-                <footer class="product-prijs">
-                    &euro;{{product.prijs}}
-                </footer>
             </div>
         </div>
     </div>
@@ -32,12 +33,15 @@ export default {
             // waarde van eigenschappen komt uit geïmporteerde variabelen
             producten,
             // dit is eigenlijk producten: producten
-            categories
+            categories,
+            // process.env geeft ons toegang tot omgevingsvariabelen van het project
+            // de eigenschap BASE_URL wordt door Vue ingevuld met het absolute adres van de webapplicatie
+            baseUrl: process.env.BASE_URL
         }
     },
     methods: {
-        maakAfbeeldingURL(product) {
-            
+        maakAfbeeldingUrl(product) {
+            return `${this.baseUrl}producten/${product.categorie}/${product.afbeelding}`;
         }
     }
 }
@@ -54,5 +58,21 @@ export default {
     h1 {
         font-size: 7rem;
         color: #40b782;
+    }
+
+    .product-kaart {
+        text-align: center;
+    }
+
+    .producten-lijst {
+        display: grid;
+        width: 80%;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        column-gap: 5rem;
+        row-gap: 5rem;
+    }
+
+    .img-container img {
+        height: 250px;
     }
 </style>
