@@ -2,9 +2,13 @@
     <div class="producten">
         <h1>Producten</h1>
         <div class="producten-lijst">
-            <div class="product-kaart"
+            <!-- directive tag bij router-link verandert het gegenereerde element
+                 naar het gekozen element(ipv standaar een a-element te worden) -->
+            <router-link class="product-kaart"
                  v-for="product of producten"
                  :key="product.id"
+                 :to="`producten/${product.id}`"
+                 tag="div"
             >
                 <header class="product-header">
                     {{product.naam}}
@@ -16,7 +20,7 @@
                         &euro;{{product.prijs}}
                     </figcaption>
                 </figure>
-            </div>
+            </router-link>
         </div>
     </div>
 </template>
