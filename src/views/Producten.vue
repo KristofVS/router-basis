@@ -29,13 +29,14 @@
 // @ is een alias voor de rootmap (src)
 // Destructuring wordt gebruikt om variabelen te maken
 // van de eigenschappen van het geëxporteerde object
-import {producten,categories} from '@/producten.js'
+import {categories} from '@/producten.js'
+import axios from 'axios'
 
 export default {
     data() {
         return {
             // waarde van eigenschappen komt uit geïmporteerde variabelen
-            producten,
+            producten: [],
             // dit is eigenlijk producten: producten
             categories,
             // process.env geeft ons toegang tot omgevingsvariabelen van het project
@@ -46,6 +47,14 @@ export default {
     methods: {
         maakAfbeeldingUrl(product) {
             return `${this.baseUrl}producten/${product.categorie}/${product.afbeelding}`;
+        }
+    },
+    async created() {
+        try {
+            const {data} = await axios.get("http://localhost:3333/producten");
+            this.producten = data;
+        } catch (ex) {
+            console.log(ex);
         }
     }
 }
